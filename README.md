@@ -16,7 +16,7 @@
 #### Build
 
 ```
-pip -r requirements.txt
+pip install -r requirements.txt
 pyinstaller -F main.py -i Nya-WSL.ico
 ```
 
