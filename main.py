@@ -9,16 +9,9 @@ from cryptography import fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-version = "1.2.0"
-print("----------------------------------------------")
-print(f"Fernet key database for pem | Nya-WSL | v{version}")
-print("----------------------------------------------")
-option = input("1. 导入私钥\n2. 导出私钥\n3. 批量导入\n4. 查看私钥列表\n\n选项: ")
-print("-------------------")
-
 if not os.path.exists("config.yml"):
-    with open("config.yml", "w") as f:
-        f.write("""# 输入密码时使用的密码掩码
+    with open("config.yml", "w", encoding="utf-8") as f:
+        f.write(r"""# 输入密码时使用的密码掩码
 # 如果是不被支持的值，则使用默认值
 # 默认值: "*"
 passwd_mask: "*"
@@ -58,8 +51,15 @@ auto_import_name: True
 update: True
 """)
 
-with open("config.yml", "r") as f:
+with open("config.yml", "r", encoding="utf-8") as f:
     config = yaml.load(f, yaml.FullLoader)
+
+version = "1.2.0"
+print("----------------------------------------------")
+print(f"Fernet key database for pem | Nya-WSL | v{version}")
+print("----------------------------------------------")
+option = input("1. 导入私钥\n2. 导出私钥\n3. 批量导入\n4. 查看私钥列表\n\n选项: ")
+print("-------------------")
 
 chars = []
 # password = getpass.getpass("请输入密码: ").encode()
