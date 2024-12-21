@@ -58,29 +58,29 @@ version = "1.2.0"
 print("----------------------------------------------")
 print(f"Fernet key database for pem | Nya-WSL | v{version}")
 print("----------------------------------------------")
-option = input("1. 导入私钥\n2. 导出私钥\n3. 批量导入\n4. 查看私钥列表\n\n选项: ")
+option = input("1. 导入\n2. 导出\n3. 批量导入\n4. 查看列表\n\n选项: ")
 print("-------------------")
 
-chars = []
 # password = getpass.getpass("请输入密码: ").encode()
 if option != "4":
-    print("请输入密码: ", end="")
+    chars = []
+    print("请输入密码: ")
     while True:
-        new_char = msvcrt.getch().decode(encoding='utf-8')
+        new_char = msvcrt.getch().decode()
         if new_char in "\r\n":
             break
         elif new_char == "\b":
             if chars:
                 del chars[-1]
-                msvcrt.putch('\b'.encode(encoding='utf-8'))
-                msvcrt.putch(' '.encode(encoding='utf-8'))
-                msvcrt.putch('\b'.encode(encoding='utf-8'))
+                msvcrt.putch('\b'.encode())
+                msvcrt.putch(' '.encode())
+                msvcrt.putch('\b'.encode())
         else:
             chars.append(new_char)
             try:
-                msvcrt.putch(config["passwd_mask"].encode(encoding='utf-8'))
+                msvcrt.putch(config["passwd_mask"].encode())
             except TypeError:
-                msvcrt.putch("*".encode(encoding='utf-8'))
+                msvcrt.putch("*".encode())
     password = "".join(chars).encode()
     print("")
     if config["salt_path"] == "cwd":
@@ -157,6 +157,8 @@ if option == "2":
         input("出现错误！")
         sys.exit("")
 
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
     with open(os.path.join(save_path, f"{save_name}.old"), "w", encoding="utf-8") as pem_bytes:
         pem_bytes.write(pem_data)
     old = open(os.path.join(save_path, f"{save_name}.old"), "r", encoding="utf-8")
